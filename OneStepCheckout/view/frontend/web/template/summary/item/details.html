@@ -1,0 +1,51 @@
+<!--
+  ~ /**
+  ~  Copyright © 2016 Magestore. All rights reserved.
+  ~  See COPYING.txt for license details.
+  ~  */
+  -->
+<tr class="even">
+    <td>
+        <div class="osc-delete" data-bind="click: function(){deleteItem($parent)}"></div>
+        <!-- ko foreach: getRegion('before_details') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+        <h2 class="product-name"  data-bind="text: $parent.name"></h2>
+        <!-- ko if: (JSON.parse($parent.options).length > 0)-->
+        <dl class="item-options">
+            <!-- 
+            @author Luca Sculco
+            aggiungo la gestione delle opzioni ricamo e regalo
+            -->
+            <!-- ko foreach: JSON.parse($parent.options)-->
+            <!-- ko if: ($data.option_sku == 'ricamo') -->
+            <img src="/pub/media/kamiceria/ricamo.png">
+            <!-- /ko -->
+            <!-- ko if: ($data.option_sku == 'regalo') -->
+            <img src="/pub/media/kamiceria/regalo.png" />
+            <!-- /ko -->
+            <!-- ko if: ($data.option_sku != 'ricamo' && $data.option_sku != 'regalo') -->
+            <dt class="label" data-bind="text: label"></dt>
+            <dd class="values" data-bind="html: value"></dd>
+            <!-- /ko -->
+            <!-- /ko -->
+        </dl>
+        <!-- /ko -->
+    </td>
+    <td class="a-center qty-box">
+        <div class="box-qty" data-item-id="<?php echo $_item->getId(); ?>">
+            <label for="qty_input"></label>
+            <input disabled="disabled" class="qty qty-item-display" data-bind="value: 'x' + $parent.qty, event :{change: function(){updateNewQty($parent)}}"
+                    id="qty_input" />
+            <div class="control-qty">
+                <div data-change-type="add" class="osc-add" data-bind="click: function(){addQty($parent)}"></div>
+                <div data-change-type="minus" class="osc-minus" data-bind="click: function(){minusQty($parent)}"></div>
+            </div>
+        </div>
+    </td>
+    <td class="a-right last">
+        <!-- ko foreach: getRegion('after_details') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+    </td>
+</tr>

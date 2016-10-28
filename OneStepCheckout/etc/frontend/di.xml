@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+  ~ /**
+  ~  Copyright © 2016 Magestore. All rights reserved.
+  ~  See COPYING.txt for license details.
+  ~  */
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="plugin_checkout" type="Magestore\OneStepCheckout\Plugin\Checkout\Controller\Cart\Add"/>
+    </type>
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="osc_processors" xsi:type="object">Magestore\OneStepCheckout\Block\Checkout\LayoutProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Helper\Image">
+        <plugin name="plugin_image" type="Magestore\OneStepCheckout\Plugin\Catalog\Helper\Image"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Index\Index">
+        <plugin name="plugin_checkout" type="Magestore\OneStepCheckout\Plugin\Checkout\Controller\Index\Index"/>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="magestore_osc_provider" xsi:type="object">Magestore\OneStepCheckout\Model\OneStepConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Checkout\Block\Checkout\AttributeMerger" type="Magestore\OneStepCheckout\Block\Checkout\AttributeMerger" />
+    
+    <!-- LS: customizzazione per pagina bivio -->
+    <type name="Magento\Customer\Block\Form\Login\Info">
+        <plugin name="onestepcheckout_form_login_info" type="Magestore\OneStepCheckout\Plugin\Customer\Block\Form\Login\Info"/>
+    </type>
+    <type name="Magento\Checkout\Block\Onepage\Link">
+        <plugin name="onestepcheckout_cart_proceed_to_checkout" type="Magestore\OneStepCheckout\Plugin\Checkout\Onepage\Link"/>
+    </type>
+    <preference for="Magento\Customer\Model\Account\Redirect" type="Magestore\OneStepCheckout\Model\Rewrite\Account\Redirect" />
+    <preference for="Magento\Customer\Model\Url" type="Magestore\OneStepCheckout\Model\Rewrite\Customer\Url" />
+    
+</config>
